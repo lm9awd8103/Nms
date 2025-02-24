@@ -330,7 +330,7 @@ local Corner3 = Instance.new("UICorner")
     Logo.Position = UDim2.new(0, 10, 0, 3)
     Logo.Size = UDim2.new(0, 30, 0, 25)
     Logo.ZIndex = 2
-    Logo.Image = "http://www.roblox.com/asset/?id=89080175935937"
+    Logo.Image = "http://www.roblox.com/asset/?id=115999273037408"
     
     MainSide.Name = "MainSide"
     MainSide.Parent = Main
