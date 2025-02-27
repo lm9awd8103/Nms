@@ -258,7 +258,7 @@ local BackgroundImage = Instance.new("ImageLabel")
 
 BackgroundImage.Name = "BackgroundImage"
 BackgroundImage.Parent = Main
-BackgroundImage.BackgroundTransparency = 1.000
+BackgroundImage.BackgroundTransparency = 0.9
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
 BackgroundImage.ZIndex = 10  -- Set a high ZIndex
@@ -275,7 +275,7 @@ local function adjustTransparency(parent)
         elseif v:IsA("TextLabel") or v:IsA("TextButton") then
             -- Make text fully visible
             v.BackgroundTransparency = 1
-            v.TextTransparency = 0
+            v.TextTransparency = 1
         end
     end
 end
