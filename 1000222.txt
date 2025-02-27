@@ -1396,7 +1396,7 @@ local Corner3 = Instance.new("UICorner")
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
                 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
                 BackgroundImage.ZIndex = 0  -- Ensure it's behind all other UI elements
-                BackgroundImage.Image = "rbxassetid://94082393514662"  -- Keep the same image asset ID
+                BackgroundImage.Image = "rbxassetid://115999273037408"  -- Keep the same image asset ID
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
 
