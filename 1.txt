@@ -245,46 +245,49 @@ function Kavo.CreateLib(kavName, themeList)
     ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     ScreenGui.ResetOnSpawn = false
 
-    Main.Name = "Main"
-    Main.Active = true
-    Main.Parent = ScreenGui
-    Main.BackgroundColor3 = themeList.Background
-    Main.ClipsDescendants = true
-    Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
-    Main.Size = UDim2.new(0, 525, 0, 318)
+-- Create Main frame
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Main.Size = UDim2.new(0, 500, 0, 400)
 
 -- Create Background Image
 local BackgroundImage = Instance.new("ImageLabel")
 
 BackgroundImage.Name = "BackgroundImage"
-BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
+BackgroundImage.Parent = Main
 BackgroundImage.BackgroundTransparency = 1.000
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-BackgroundImage.ZIndex = 0 -- Ensure it's behind all other UI elements
-BackgroundImage.Image = "rbxassetid://115999273037408"  -- Keep the same image asset ID
+BackgroundImage.ZIndex = 0
+BackgroundImage.Image = "rbxassetid://115999273037408"
 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
+BackgroundImage.ImageTransparency = 0.2
 
--- Function to adjust ZIndex and transparency for all elements
-local function adjustElementLayers(parent)
+-- Function to adjust transparency for all elements
+local function adjustTransparency(parent)
     for _, v in pairs(parent:GetDescendants()) do
-        if v:IsA("GuiObject") then
-            -- Ensure the element is above the background
-            if v.ZIndex <= BackgroundImage.ZIndex then
-                v.ZIndex = BackgroundImage.ZIndex + 1
-            end
-
-            -- Adjust transparency for frames, labels, and buttons
-            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.7, 1)  -- Increase transparency
-            end
+        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.7, 1)
         end
     end
 end
 
--- Apply the adjustment to the Main frame and all its descendants
-adjustElementLayers(Main)
+-- Function to adjust ZIndex for all elements
+local function adjustZIndex(parent)
+    for _, v in pairs(parent:GetDescendants()) do
+        if v:IsA("GuiObject") and v ~= BackgroundImage then
+            v.ZIndex = BackgroundImage.ZIndex + 1
+        end
+    end
+end
+
+-- Apply adjustments
+adjustTransparency(Main)
+adjustZIndex(Main)
+
+-- Add other UI elements (tabs, sections, buttons, etc.)
 
     MainCorner.CornerRadius = UDim.new(0, 4)
     MainCorner.Name = "MainCorner"
