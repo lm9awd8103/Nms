@@ -1394,18 +1394,15 @@ local BackgroundImage = Instance.new("ImageLabel")
                 BackgroundImage.BackgroundTransparency = 1.000
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
                 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-                BackgroundImage.ZIndex = -100 -- Move it far behind all UI elements
+                BackgroundImage.ZIndex = 0 -- Lowest ZIndex so it's behind everything
                 BackgroundImage.Image = "rbxassetid://115999273037408"
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  
 
-                -- Ensure All UI Elements Appear Properly
+                -- Make sure all UI elements have a ZIndex ABOVE 0
                 for _, v in pairs(Main:GetDescendants()) do
-                    if v:IsA("GuiObject") then
-                        v.ZIndex = math.max(v.ZIndex, 1) -- Keep UI above background
-                        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-                            v.BackgroundTransparency = math.clamp(v.BackgroundTransparency, 0, 0.6)  -- Reduce transparency
-                        end
+                    if v:IsA("GuiObject") and v ~= BackgroundImage then
+                        v.ZIndex = v.ZIndex + 1  -- Ensure it's above background
                     end
                 end
 
