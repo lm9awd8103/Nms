@@ -271,9 +271,9 @@ local function adjustTransparency(parent)
     for _, v in pairs(parent:GetDescendants()) do
         if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
             -- Reduce transparency to make elements more visible
-            v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 0.7)  -- Adjust this value as needed
+            v.BackgroundTransparency = math.min(v.BackgroundTransparency + 1, 0.9)  -- Adjust this value as needed
         end
-    end
+    end of m
 end
 
 -- Apply transparency adjustment to the Main frame and all its descendants
