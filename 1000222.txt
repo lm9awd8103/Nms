@@ -1404,7 +1404,7 @@ local Corner3 = Instance.new("UICorner")
                     for _, v in pairs(Main:GetDescendants()) do
                         if v:IsA("GuiObject") then
                             v.ZIndex = v.ZIndex + 1  -- Move UI elements above the background
-                            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+                            if v:IsA("Frame") or v:IsA("TextLabel") then
                                 v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
                                 -- Ensures elements don't fully disappear
                             end
