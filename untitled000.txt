@@ -1390,24 +1390,27 @@ local Corner3 = Instance.new("UICorner")
 local BackgroundImage = Instance.new("ImageLabel")
 
                 BackgroundImage.Name = "BackgroundImage"
-                BackgroundImage.Parent = ScreenGui  -- Attach to root to ensure it's visible
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
                 BackgroundImage.BackgroundTransparency = 1.000
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
                 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-                BackgroundImage.ZIndex = -1 -- Ensure it's behind all other UI elements
+                BackgroundImage.ZIndex = -10 -- Move it far behind all UI elements
                 BackgroundImage.Image = "rbxassetid://115999273037408"
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  
 
-                -- Ensure All UI Elements Appear
+                -- Ensure All UI Elements Appear Properly
                 for _, v in pairs(Main:GetDescendants()) do
                     if v:IsA("GuiObject") then
-                        v.ZIndex = math.max(v.ZIndex, 1) -- Keep elements above background
+                        v.ZIndex = math.max(v.ZIndex, 1) -- Keep UI above background
                         if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-                            v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.2, 0, 0.9)
+                            v.BackgroundTransparency = math.clamp(v.BackgroundTransparency, 0, 0.6)  -- Reduce transparency
                         end
                     end
                 end
+
+                -- Make sure Main does not clip the background
+                Main.ClipsDescendants = false
 
 
                 UICorner.CornerRadius = UDim.new(0, 4)
