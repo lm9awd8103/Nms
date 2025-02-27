@@ -1400,16 +1400,6 @@ local Corner3 = Instance.new("UICorner")
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
 
-                -- Adjust UI Transparency and ZIndex to Blend with Background
-                    for _, v in pairs(Main:GetDescendants()) do
-                        if v:IsA("GuiObject") then
-                            v.ZIndex = v.ZIndex + 1  -- Move UI elements above the background
-                            if v:IsA("Frame") or v:IsA("TextLabel") then
-                                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
-                                -- Ensures elements don't fully disappear
-                            end
-                        end
-                    end
 
 
                 UICorner.CornerRadius = UDim.new(0, 4)
