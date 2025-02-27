@@ -1387,24 +1387,33 @@ local Corner3 = Instance.new("UICorner")
                 moreInfo.RichText = true
                 moreInfo.TextXAlignment = Enum.TextXAlignment.Left
                 
-local BackgroundImage = Instance.new("ImageLabel")
+-- Create a Background Frame to ensure proper layering
+                local BackgroundFrame = Instance.new("Frame")
+                BackgroundFrame.Name = "BackgroundFrame"
+                BackgroundFrame.Parent = Main.Parent  -- Parent it to the same parent as Main
+                BackgroundFrame.BackgroundTransparency = 1  -- No solid background, only image
+                BackgroundFrame.Position = UDim2.new(0, 0, 0, 0)
+                BackgroundFrame.Size = UDim2.new(1, 0, 1, 0)
+                BackgroundFrame.ZIndex = 0  -- Lowest layer possible
 
+                -- Create Background Image inside BackgroundFrame
+                local BackgroundImage = Instance.new("ImageLabel")
                 BackgroundImage.Name = "BackgroundImage"
-                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
-                BackgroundImage.BackgroundTransparency = 1.000
+                BackgroundImage.Parent = BackgroundFrame
+                BackgroundImage.BackgroundTransparency = 1
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-                BackgroundImage.ZIndex = 0 -- Lowest ZIndex so it's behind everything
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
                 BackgroundImage.Image = "rbxassetid://115999273037408"
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-                BackgroundImage.ImageTransparency = 0.2  
+                BackgroundImage.ImageTransparency = 0.2
+                BackgroundImage.ZIndex = 0  -- Lowest so it's behind everything
 
-                -- Make sure all UI elements have a ZIndex ABOVE 0
-                for _, v in pairs(Main:GetDescendants()) do
-                    if v:IsA("GuiObject") and v ~= BackgroundImage then
-                        v.ZIndex = v.ZIndex + 1  -- Ensure it's above background
+                -- Ensure All UI Elements Are Above the Background
+                    for _, v in pairs(Main:GetDescendants()) do
+                        if v:IsA("GuiObject") then
+                            v.ZIndex = math.max(v.ZIndex, 1)  -- Ensure UI elements are above background
+                        end
                     end
-                end
 
 
 
