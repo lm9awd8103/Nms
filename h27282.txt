@@ -264,13 +264,13 @@ BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
 BackgroundImage.ZIndex = 1  -- Set a high ZIndex
 BackgroundImage.Image = "rbxassetid://115999273037408"
 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-BackgroundImage.ImageTransparency = 0.2
+BackgroundImage.ImageTransparency = 0.1
 
 -- Function to adjust ZIndex for all elements
 local function adjustZIndex(parent)
     for _, v in pairs(parent:GetDescendants()) do
         if v:IsA("GuiObject") and v ~= BackgroundImage then
-            v.ZIndex = BackgroundImage.ZIndex - 2  -- Ensure elements are below the background
+            v.ZIndex = BackgroundImage.ZIndex - 1  -- Ensure elements are below the background
         end
     end
 end
