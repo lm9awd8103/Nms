@@ -1395,7 +1395,7 @@ local Corner3 = Instance.new("UICorner")
     BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
     BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
     BackgroundImage.ZIndex = 1  -- Same layer as UI elements
-    BackgroundImage.Image = "rbxassetid://YOUR_IMAGE_ASSET_ID"  -- Replace with actual ID
+    BackgroundImage.Image = "rbxassetid://89080175935937"  -- Replace with actual ID
     BackgroundImage.ScaleType = Enum.ScaleType.Crop
     BackgroundImage.ImageTransparency = 0.2  -- Makes it blend with UI
 
