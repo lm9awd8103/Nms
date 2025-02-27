@@ -2475,7 +2475,7 @@ local Corner3 = Instance.new("UICorner")
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
                 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
                 BackgroundImage.ZIndex = -1  -- Push the background behind everything
-                BackgroundImage.Image = "70804134595452"
+                BackgroundImage.Image = "94082393514662"
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency to blend with UI
 
