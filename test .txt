@@ -7,9 +7,9 @@ local run = game:GetService("RunService")
 
 local Utility = {}
 local Objects = {}
-function Kavo:DraggingEnabled(frame, parent, main)
+function Kavo:DraggingEnabled(frame, parent)
         
-    parent = parent or frame or main
+    parent = parent or frame
     
     -- stolen from wally or kiriot, kek
     local dragging = false
@@ -160,7 +160,7 @@ function Kavo:BGLoader(id)
 	end
 	wait()
 	local Fondo = Instance.new("ImageLabel",game.CoreGui:FindFirstChild("HubDestroyer").Main)
-	Fondo.Image = "rbxassetid://89080175935937"..id
+	Fondo.Image = "rbxassetid://89080175935937"
 	Fondo.ZIndex = 0
 	Fondo.Size = game.CoreGui:FindFirstChild("HubDestroyer").Main.Size
 end
