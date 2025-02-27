@@ -1389,37 +1389,10 @@ local Corner3 = Instance.new("UICorner")
                 
 
 
-
                 UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = moreInfo
 
-                if themeList.SchemeColor == Color3.f-- Create Background Image  
-                local BackgroundImage = Instance.new("ImageLabel")  
-  
-                BackgroundImage.Name = "BackgroundImage"  
-                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI  
-                BackgroundImage.BackgroundTransparency = 1.000  
-                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)  
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                  
-                BackgroundImage.ZIndex = 1 -- Keep it behind UI elements  
-                BackgroundImage.Image = "rbxassetid://115999273037408"  
-                BackgroundImage.ScaleType = Enum.ScaleType.Crop  
-                BackgroundImage.ImageTransparency = 0.3  -- Slight transparency for blending  
-  
-                -- Adjust UI Transparency and ZIndex  
-                    for _, v in pairs(Main:GetDescendants()) do  
-                        if v:IsA("GuiObject") then  
-                            if v:IsA("TextLabel") or v:IsA("TextButton") then  
-                                v.ZIndex = 3 -- Ensure text stays above everything  
-                                v.TextTransparency = 0  -- Keep text fully visible  
-                            else  
-                                v.ZIndex = 2 -- Keep UI above background but below text  
-                                v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.2, 0, 0.7)  
-                                -- Ensures UI is visible but slightly blended with the background  
-                            end  
-                        end  
-                    end
-                romRGB(255,255,255) then
+                if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
                     Utility:TweenObject(moreInfo, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
                 end 
                 if themeList.SchemeColor == Color3.fromRGB(0,0,0) then
@@ -2680,7 +2653,31 @@ local Corner3 = Instance.new("UICorner")
 	            Objects[label] = "TextColor3"
 	            label.TextSize = 14.000
 	            label.TextXAlignment = Enum.TextXAlignment.Left
-	            
+	           -- Create Background Image  
+                local BackgroundImage = Instance.new("ImageLabel")  
+  
+                BackgroundImage.Name = "BackgroundImage"  
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI  
+                BackgroundImage.BackgroundTransparency = 1.000  
+                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)  
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                  
+                BackgroundImage.ZIndex = 2 -- Same level as UI elements  
+                BackgroundImage.Image = "rbxassetid://115999273037408"  
+                BackgroundImage.ScaleType = Enum.ScaleType.Crop  
+                BackgroundImage.ImageTransparency = 0.3  -- Slight transparency to blend with UI  
+  
+                -- Adjust UI Transparency and ZIndex  
+                    for _, v in pairs(Main:GetDescendants()) do  
+                        if v:IsA("GuiObject") then  
+                            if v:IsA("TextLabel") or v:IsA("TextButton") then  
+                                v.ZIndex = 3 -- Ensure text is above everything  
+                                v.TextTransparency = 0  -- Keep text fully visible  
+                            else  
+                                v.ZIndex = 2 -- Same as background  
+                                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.5, 1)    
+                            end  
+                        end  
+                    end 
 	           	UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = label
             	
