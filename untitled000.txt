@@ -715,6 +715,31 @@ local Corner3 = Instance.new("UICorner")
                 Objects[btnInfo] = "TextColor3"
                 btnInfo.TextSize = 14.000
                 btnInfo.TextXAlignment = Enum.TextXAlignment.Left
+                -- Create Background Image
+                local BackgroundImage = Instance.new("ImageLabel")
+
+                BackgroundImage.Name = "BackgroundImage"
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
+                BackgroundImage.BackgroundTransparency = 1.000
+                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
+                BackgroundImage.ZIndex = 0 -- Ensure it's behind all other UI elements
+                BackgroundImage.Image = "rbxassetid://115999273037408"  -- Keep the same image asset ID
+                BackgroundImage.ScaleType = Enum.ScaleType.Crop
+                BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
+
+                -- Adjust UI Transparency and ZIndex to Blend with Background
+                for _, v in pairs(Main:GetDescendants()) do
+                    if v:IsA("GuiObject") then
+                        v.ZIndex = v.ZIndex + 1  -- Move UI elements above the background
+                        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+                            v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
+                            -- Ensures elements don't fully disappear
+                        end
+                    end
+                end
+
+
 
                 if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
                     Utility:TweenObject(moreInfo, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
@@ -1386,34 +1411,6 @@ local Corner3 = Instance.new("UICorner")
                 moreInfo.TextSize = 14.000
                 moreInfo.RichText = true
                 moreInfo.TextXAlignment = Enum.TextXAlignment.Left
-                
--- Create a Background Frame to ensure proper layering
-                local BackgroundFrame = Instance.new("Frame")
-                BackgroundFrame.Name = "BackgroundFrame"
-                BackgroundFrame.Parent = Main.Parent  -- Parent it to the same parent as Main
-                BackgroundFrame.BackgroundTransparency = 1  -- No solid background, only image
-                BackgroundFrame.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundFrame.Size = UDim2.new(1, 0, 1, 0)
-                BackgroundFrame.ZIndex = 0  -- Lowest layer possible
-
-                -- Create Background Image inside BackgroundFrame
-                local BackgroundImage = Instance.new("ImageLabel")
-                BackgroundImage.Name = "BackgroundImage"
-                BackgroundImage.Parent = BackgroundFrame
-                BackgroundImage.BackgroundTransparency = 1
-                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-                BackgroundImage.Image = "rbxassetid://115999273037408"
-                BackgroundImage.ScaleType = Enum.ScaleType.Crop
-                BackgroundImage.ImageTransparency = 0.2
-                BackgroundImage.ZIndex = 0  -- Lowest so it's behind everything
-
-                -- Ensure All UI Elements Are Above the Background
-                    for _, v in pairs(Main:GetDescendants()) do
-                        if v:IsA("GuiObject") then
-                            v.ZIndex = math.max(v.ZIndex, 1)  -- Ensure UI elements are above background
-                        end
-                    end
 
 
 
