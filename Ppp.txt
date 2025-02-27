@@ -247,8 +247,8 @@ function Kavo.CreateLib(kavName, themeList)
 
     Main.Name = "Main"
 
+-- Add Background Image behind all UI elements
 local BackgroundImage = Instance.new("ImageLabel")
-
 BackgroundImage.Name = "BackgroundImage"
 BackgroundImage.Parent = Main
 BackgroundImage.BackgroundTransparency = 1.000
@@ -259,14 +259,25 @@ BackgroundImage.Image = "rbxassetid://YOUR_IMAGE_ASSET_ID"  -- Replace with actu
 BackgroundImage.ScaleType = Enum.ScaleType.Crop
 BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency for a better look
 
+-- Ensure UI elements allow background visibility
 for _, v in pairs(Main:GetDescendants()) do
     if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-        v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.3, 0, 1)  
+        v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.3, 0, 1)
     end
 end
 
     Main.Active = true
     Main.Parent = ScreenGui
+
+-- Apply Rounded Corners to UI Elements
+for _, v in pairs(Main:GetDescendants()) do
+    if v:IsA("Frame") or v:IsA("TextButton") then
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)  -- Smooth rounded corners
+        corner.Parent = v
+    end
+end
+
     Main.BackgroundColor3 = themeList.Background
     Main.ClipsDescendants = true
     Main.Position = UDim2.new(0.336503863, 0, 0.275485456, 0)
@@ -466,6 +477,20 @@ LogoButtonCorner.Parent = Logo
 
         tabButton.Name = tabName.."TabButton"
         tabButton.Parent = tabFrames
+
+-- Add Hover Effect to Buttons
+for _, button in pairs(Main:GetDescendants()) do
+    if button:IsA("TextButton") then
+        local originalColor = button.BackgroundColor3
+        button.MouseEnter:Connect(function()
+            button.BackgroundColor3 = Color3.fromRGB(0, 200, 255)  -- Highlight effect
+        end)
+        button.MouseLeave:Connect(function()
+            button.BackgroundColor3 = originalColor  -- Reset color
+        end)
+    end
+end
+
         tabButton.BackgroundColor3 = themeList.SchemeColor
         Objects[tabButton] = "SchemeColor"
         tabButton.Size = UDim2.new(0, 135, 0, 28)
@@ -2707,24 +2732,3 @@ LogoButtonCorner.Parent = Logo
     return Tabs
 end
 return Kavo
-
-for _, v in pairs(Main:GetDescendants()) do
-    if v:IsA("Frame") or v:IsA("TextButton") then
-        local corner = Instance.new("UICorner")
-        corner.CornerRadius = UDim.new(0, 10)  -- Smooth rounded corners
-        corner.Parent = v
-    end
-end
-
-
-for _, button in pairs(Main:GetDescendants()) do
-    if button:IsA("TextButton") then
-        local originalColor = button.BackgroundColor3
-        button.MouseEnter:Connect(function()
-            button.BackgroundColor3 = Color3.fromRGB(0, 200, 255)  -- Highlight effect
-        end)
-        button.MouseLeave:Connect(function()
-            button.BackgroundColor3 = originalColor  -- Reset color
-        end)
-    end
-end
