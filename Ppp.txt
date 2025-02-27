@@ -246,6 +246,25 @@ function Kavo.CreateLib(kavName, themeList)
     ScreenGui.ResetOnSpawn = false
 
     Main.Name = "Main"
+
+local BackgroundImage = Instance.new("ImageLabel")
+
+BackgroundImage.Name = "BackgroundImage"
+BackgroundImage.Parent = Main
+BackgroundImage.BackgroundTransparency = 1.000
+BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
+BackgroundImage.ZIndex = -1  -- Push the background behind everything
+BackgroundImage.Image = "rbxassetid://YOUR_IMAGE_ASSET_ID"  -- Replace with actual image ID
+BackgroundImage.ScaleType = Enum.ScaleType.Crop
+BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency for a better look
+
+for _, v in pairs(Main:GetDescendants()) do
+    if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+        v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.3, 0, 1)  
+    end
+end
+
     Main.Active = true
     Main.Parent = ScreenGui
     Main.BackgroundColor3 = themeList.Background
@@ -322,7 +341,19 @@ function Kavo.CreateLib(kavName, themeList)
 
 local Corner3 = Instance.new("UICorner")
     
-
+    local Logo = Instance.new("ImageLabel")
+    
+    Logo.Name = "Logo"
+    Logo.Parent = MainHeader
+    Logo.BackgroundTransparency = 1.000
+    Logo.Position = UDim2.new(0, 10, 0, 3)
+    Logo.Size = UDim2.new(0, 30, 0, 25)
+    Logo.ZIndex = 2
+    Logo.Image = "http://www.roblox.com/asset/?id=70804134595452"
+    
+    local LogoCorner = Instance.new("UICorner")
+LogoCorner.CornerRadius = UDim.new(0.1, 0)
+LogoButtonCorner.Parent = Logo
     
     MainSide.Name = "MainSide"
     MainSide.Parent = Main
@@ -2115,7 +2146,6 @@ local Corner3 = Instance.new("UICorner")
                 UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = keybindElement
 
-
                 touch.Name = "touch"
                 touch.Parent = keybindElement
                 touch.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -2466,26 +2496,6 @@ local Corner3 = Instance.new("UICorner")
                 togName_2.TextColor3 = themeList.TextColor
                 togName_2.TextSize = 14.000
                 togName_2.TextXAlignment = Enum.TextXAlignment.Left
-                
-                local BackgroundImage = Instance.new("ImageLabel")
-
-                BackgroundImage.Name = "BackgroundImage"
-                BackgroundImage.Parent = Main  -- Attach it to Main so it moves with the UI
-                BackgroundImage.BackgroundTransparency = 1.000
-                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-                BackgroundImage.ZIndex = -1  -- Push the background behind everything
-                BackgroundImage.Image = "94082393514662"
-                BackgroundImage.ScaleType = Enum.ScaleType.Crop
-                BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency to blend with UI
-
-                -- Make sure all UI elements allow the background to be visible
-                for _, v in pairs(Main:GetDescendants()) do
-                    if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-                        v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.3, 0, 1)  
-                        -- Increases transparency slightly, but doesn't exceed 1 (fully invisible)
-                    end
-                end
 
                 if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
                     Utility:TweenObject(moreInfo, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
@@ -2667,8 +2677,7 @@ local Corner3 = Instance.new("UICorner")
 	            
 	           	UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = label
-                
-                
+            	
 	            if themeList.SchemeColor == Color3.fromRGB(255,255,255) then
 	                Utility:TweenObject(label, {TextColor3 = Color3.fromRGB(0,0,0)}, 0.2)
 	            end 
@@ -2698,3 +2707,24 @@ local Corner3 = Instance.new("UICorner")
     return Tabs
 end
 return Kavo
+
+for _, v in pairs(Main:GetDescendants()) do
+    if v:IsA("Frame") or v:IsA("TextButton") then
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)  -- Smooth rounded corners
+        corner.Parent = v
+    end
+end
+
+
+for _, button in pairs(Main:GetDescendants()) do
+    if button:IsA("TextButton") then
+        local originalColor = button.BackgroundColor3
+        button.MouseEnter:Connect(function()
+            button.BackgroundColor3 = Color3.fromRGB(0, 200, 255)  -- Highlight effect
+        end)
+        button.MouseLeave:Connect(function()
+            button.BackgroundColor3 = originalColor  -- Reset color
+        end)
+    end
+end
