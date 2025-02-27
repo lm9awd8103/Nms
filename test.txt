@@ -254,30 +254,28 @@ function Kavo.CreateLib(kavName, themeList)
     Main.Size = UDim2.new(0, 525, 0, 318)
 
 -- Create Background Image
-local BackgroundImage = Instance.new("ImageLabel")
+                local BackgroundImage = Instance.new("ImageLabel")
 
-BackgroundImage.Name = "BackgroundImage"
-BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
-BackgroundImage.BackgroundTransparency = 1.000  -- Make the background transparent
-BackgroundImage.Position = UDim2.new(0, 0, 0, 0)  -- Position at the top-left corner
-BackgroundImage.Size = UDim2.new(1, 0, 1, 0)  -- Cover the entire parent (Main)
-BackgroundImage.ZIndex = 0  -- Ensure it's behind all other UI elements
-BackgroundImage.Image = "rbxassetid://115999273037408"  -- Image asset ID
-BackgroundImage.ScaleType = Enum.ScaleType.Crop  -- Scale the image to fit
-BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
+                BackgroundImage.Name = "BackgroundImage"
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
+                BackgroundImage.BackgroundTransparency = 1.000
+                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
+                BackgroundImage.ZIndex = 0 -- Ensure it's behind all other UI elements
+                BackgroundImage.Image = "rbxassetid://115999273037408"  -- Keep the same image asset ID
+                BackgroundImage.ScaleType = Enum.ScaleType.Crop
+                BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
 
--- Adjust UI Transparency and ZIndex to Blend with Background
-for _, v in pairs(Main:GetDescendants()) do
-    if v:IsA("GuiObject") then
-        -- Ensure the element is above the background
-        v.ZIndex = v.ZIndex + 1
-
-        -- Adjust transparency for frames, labels, and buttons
-        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-            v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)
-        end
-    end
-end
+                -- Adjust UI Transparency and ZIndex to Blend with Background
+                    for _, v in pairs(Main:GetDescendants()) do
+                        if v:IsA("GuiObject") then
+                            v.ZIndex = v.ZIndex + 1  -- Move UI elements above the background
+                            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+                                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
+                                -- Ensures elements don't fully disappear
+                            end
+                        end
+                    end
 
 -- Add other UI elements (tabs, sections, buttons, etc.)
 
