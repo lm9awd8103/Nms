@@ -1389,17 +1389,16 @@ local Corner3 = Instance.new("UICorner")
                 -- Create Background Image
                 local BackgroundImage = Instance.new("ImageLabel")
 
-    BackgroundImage.Name = "BackgroundImage"
-    BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
-    BackgroundImage.BackgroundTransparency = 1.000
-    BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-    BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-    BackgroundImage.ZIndex = 1  -- Same layer as UI elements
-    BackgroundImage.Image = "rbxassetid://89080175935937"  -- Replace with actual ID
-    BackgroundImage.ScaleType = Enum.ScaleType.Crop
-    BackgroundImage.ImageTransparency = 0.2  -- Makes it blend with UI
+                BackgroundImage.Name = "BackgroundImage"
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
+                BackgroundImage.BackgroundTransparency = 1.000
+                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                 BackgroundImage.ZIndex = 1  -- Same layer as UI elements
+                BackgroundImage.Image = "rbxassetid://89080175935937"  -- Replace with actual ID
+                BackgroundImage.ScaleType = Enum.ScaleType.Crop
+                BackgroundImage.ImageTransparency = 0.2  -- Makes it blend with UI
 
-    -- Adjust UI Transparency to Blend with Background
+-- Adjust UI Transparency to Blend with Background
     for _, v in pairs(Main:GetDescendants()) do
         if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
             v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
