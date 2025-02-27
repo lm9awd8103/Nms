@@ -258,13 +258,13 @@ local BackgroundImage = Instance.new("ImageLabel")
 
 BackgroundImage.Name = "BackgroundImage"
 BackgroundImage.Parent = Main
-BackgroundImage.BackgroundTransparency = 0.9
+BackgroundImage.BackgroundTransparency = 1  -- Ensure it's fully transparent behind the image
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-BackgroundImage.ZIndex = 1  -- Lower ZIndex to place it behind other UI elements
+BackgroundImage.ZIndex = 1  -- Set it behind all other elements
 BackgroundImage.Image = "rbxassetid://115999273037408"
 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-BackgroundImage.ImageTransparency = 0.7  -- Keep the background faded
+BackgroundImage.ImageTransparency = 0.7  -- Adjusted to make background less visible
 
 -- Function to adjust transparency for all elements
 local function adjustTransparency(parent)
@@ -273,17 +273,22 @@ local function adjustTransparency(parent)
             -- Make frames and buttons semi-transparent
             v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.5, 0.8)
         elseif v:IsA("TextLabel") or v:IsA("TextButton") then
-            -- Make text fully visible
-            v.BackgroundTransparency = 1
+            -- Ensure text is fully visible
+            v.BackgroundTransparency = 1  -- Remove any background from text elements
             v.TextTransparency = 0  -- Fully visible text
-            v.TextColor3 = Color3.new(1, 1, 1)  -- Ensure text is white for contrast
+            v.TextColor3 = Color3.new(1, 1, 1)  -- Ensure text is white
             v.TextStrokeTransparency = 0  -- Fully visible outline
-            v.TextStrokeColor3 = Color3.new(0, 0, 0)  -- Black outline for better contrast
+            v.TextStrokeColor3 = Color3.new(0, 0, 0)  -- Black outline for contrast
+            v.ZIndex = 20  -- Ensure text is above everything else
         end
     end
 end
 
--- Apply transparency adjustment to the Main frame and all its descendants
+-- Apply transparency adjustment
+adjustTransparency(Main)
+
+-- Force text visibility after a short delay to override any UI updates
+task.wait(0.1)
 adjustTransparency(Main)
 
 -- Add other UI elements (tabs, sections, buttons, etc.)
