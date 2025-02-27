@@ -270,7 +270,7 @@ BackgroundImage.ImageTransparency = 0.2
 local function adjustZIndex(parent)
     for _, v in pairs(parent:GetDescendants()) do
         if v:IsA("GuiObject") and v ~= BackgroundImage then
-            v.ZIndex = BackgroundImage.ZIndex - 1  -- Ensure elements are below the background
+            v.ZIndex = BackgroundImage.ZIndex - 2  -- Ensure elements are below the background
         end
     end
 end
