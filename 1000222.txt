@@ -1394,20 +1394,22 @@ local Corner3 = Instance.new("UICorner")
                 BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
                 BackgroundImage.BackgroundTransparency = 1.000
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                 
-                BackgroundImage.ZIndex = -1  -- Set to -1 to ensure it stays behind
-                BackgroundImage.Image = "rbxassetid://89080175935937"  -- Replace with actual ID
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
+                BackgroundImage.ZIndex = 0  -- Ensure it's behind all other UI elements
+                BackgroundImage.Image = "rbxassetid://89080175935937"  -- Keep the same image asset ID
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-                BackgroundImage.ImageTransparency = 0.2  -- Makes it blend with UI
+                BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
 
-                -- Move the Background to the Back
-                Main.ClipsDescendants = false  -- Ensures elements render properly
-                
-                for _, v in pairs(Main:GetDescendants()) do
-                    if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") or v:IsA("ScrollingFrame") then
-                        v.ZIndex = math.max(v.ZIndex, 1)  -- Ensures UI stays above background
+                -- Adjust UI Transparency and ZIndex to Blend with Background
+                    for _, v in pairs(Main:GetDescendants()) do
+                        if v:IsA("GuiObject") then
+                            v.ZIndex = v.ZIndex + 1  -- Move UI elements above the background
+                            if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+                                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)  
+                                -- Ensures elements don't fully disappear
+                            end
+                        end
                     end
-                end
 
 
                 UICorner.CornerRadius = UDim.new(0, 4)
