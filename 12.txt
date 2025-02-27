@@ -261,10 +261,10 @@ BackgroundImage.Parent = Main
 BackgroundImage.BackgroundTransparency = 0.9
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-BackgroundImage.ZIndex = 10  -- Set a high ZIndex
+BackgroundImage.ZIndex = 1  -- Lower ZIndex to place it behind other UI elements
 BackgroundImage.Image = "rbxassetid://115999273037408"
 BackgroundImage.ScaleType = Enum.ScaleType.Crop
-BackgroundImage.ImageTransparency = 0.7  -- Makes the background more faded
+BackgroundImage.ImageTransparency = 0.7  -- Keep the background faded
 
 -- Function to adjust transparency for all elements
 local function adjustTransparency(parent)
@@ -275,9 +275,10 @@ local function adjustTransparency(parent)
         elseif v:IsA("TextLabel") or v:IsA("TextButton") then
             -- Make text fully visible
             v.BackgroundTransparency = 1
-            v.TextTransparency = 0  -- Ensure text is fully visible
-            v.TextStrokeTransparency = 0.2  -- Optional: Outline for better readability
-            v.TextStrokeColor3 = Color3.new(0, 0, 0)  -- Black outline for contrast
+            v.TextTransparency = 0  -- Fully visible text
+            v.TextColor3 = Color3.new(1, 1, 1)  -- Ensure text is white for contrast
+            v.TextStrokeTransparency = 0  -- Fully visible outline
+            v.TextStrokeColor3 = Color3.new(0, 0, 0)  -- Black outline for better contrast
         end
     end
 end
