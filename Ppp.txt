@@ -326,10 +326,10 @@ local BackgroundImage = Instance.new("ImageLabel")
 
     BackgroundImage.Name = "BackgroundImage"
     BackgroundImage.Parent = Main
-    BackgroundImage.BackgroundTransparency = 1.000
+    BackgroundImage.BackgroundTransparency = 0.3
     BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
     BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-    BackgroundImage.ZIndex = 0
+    BackgroundImage.ZIndex = 1
     BackgroundImage.Image = "rbxassetid://89080175935937"
     BackgroundImage.ScaleType = Enum.ScaleType.Crop
     
