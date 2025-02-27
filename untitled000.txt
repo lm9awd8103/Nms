@@ -1394,7 +1394,7 @@ local BackgroundImage = Instance.new("ImageLabel")
                 BackgroundImage.BackgroundTransparency = 1.000
                 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
                 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-                BackgroundImage.ZIndex = 0 -- Move it far behind all UI elements
+                BackgroundImage.ZIndex = -100 -- Move it far behind all UI elements
                 BackgroundImage.Image = "rbxassetid://115999273037408"
                 BackgroundImage.ScaleType = Enum.ScaleType.Crop
                 BackgroundImage.ImageTransparency = 0.2  
@@ -1409,8 +1409,6 @@ local BackgroundImage = Instance.new("ImageLabel")
                     end
                 end
 
-                -- Make sure Main does not clip the background
-                Main.ClipsDescendants = false
 
 
                 UICorner.CornerRadius = UDim.new(0, 4)
