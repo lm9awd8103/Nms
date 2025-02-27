@@ -1387,19 +1387,30 @@ local Corner3 = Instance.new("UICorner")
                 moreInfo.RichText = true
                 moreInfo.TextXAlignment = Enum.TextXAlignment.Left
                 
--- Create Background Image
-                local BackgroundImage = Instance.new("ImageLabel")
-
-                BackgroundImage.Name = "BackgroundImage"
-                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
-                BackgroundImage.BackgroundTransparency = 1.000
-                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
-                BackgroundImage.ZIndex = 0 -- Ensure it's behind all other UI elements
-                BackgroundImage.Image = "rbxassetid://115999273037408"  -- Keep the same image asset ID
-                BackgroundImage.ScaleType = Enum.ScaleType.Crop
-                BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency as needed
-
+-- Create Background Image  
+                local BackgroundImage = Instance.new("ImageLabel")  
+  
+                BackgroundImage.Name = "BackgroundImage"  
+                BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI  
+                BackgroundImage.BackgroundTransparency = 1.000  
+                BackgroundImage.Position = UDim2.new(0, 0, 0, 0)  
+                BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                  
+                BackgroundImage.ZIndex = 50 -- Set above frames but below text  
+                BackgroundImage.Image = "rbxassetid://115999273037408"  
+                BackgroundImage.ScaleType = Enum.ScaleType.Crop  
+                BackgroundImage.ImageTransparency = 0.2  
+  
+                -- Adjust UI Transparency and ZIndex  
+                    for _, v in pairs(Main:GetDescendants()) do  
+                        if v:IsA("GuiObject") then  
+                            if v:IsA("TextLabel") or v:IsA("TextButton") then  
+                                v.ZIndex = 100 -- Ensure text is above everything  
+                            else  
+                                v.ZIndex = 51 -- Set above the background but below text  
+                                v.BackgroundTransparency = math.min(v.BackgroundTransparency + 0.3, 1)    
+                            end  
+                        end  
+                    end
 
 
                 UICorner.CornerRadius = UDim.new(0, 4)
