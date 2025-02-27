@@ -258,7 +258,7 @@ local BackgroundImage = Instance.new("ImageLabel")
 
 BackgroundImage.Name = "BackgroundImage"
 BackgroundImage.Parent = Main  -- Attach to Main so it moves with the UI
-BackgroundImage.BackgroundTransparency = 0.5
+BackgroundImage.BackgroundTransparency = 3
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)                
 BackgroundImage.ZIndex = 10 -- Set a high ZIndex to ensure it's above other elements
