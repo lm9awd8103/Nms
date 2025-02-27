@@ -247,25 +247,6 @@ function Kavo.CreateLib(kavName, themeList)
 
     Main.Name = "Main"
 
--- Add Background Image behind all UI elements
-local BackgroundImage = Instance.new("ImageLabel")
-BackgroundImage.Name = "BackgroundImage"
-BackgroundImage.Parent = Main
-BackgroundImage.BackgroundTransparency = 1.000
-BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-BackgroundImage.ZIndex = -1  -- Push the background behind everything
-BackgroundImage.Image = "rbxassetid://YOUR_IMAGE_ASSET_ID"  -- Replace with actual image ID
-BackgroundImage.ScaleType = Enum.ScaleType.Crop
-BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency for a better look
-
--- Ensure UI elements allow background visibility
-for _, v in pairs(Main:GetDescendants()) do
-    if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-        v.BackgroundTransparency = math.clamp(v.BackgroundTransparency + 0.3, 0, 1)
-    end
-end
-
     Main.Active = true
     Main.Parent = ScreenGui
 
