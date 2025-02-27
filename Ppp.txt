@@ -2115,24 +2115,6 @@ local Corner3 = Instance.new("UICorner")
                 UICorner.CornerRadius = UDim.new(0, 4)
                 UICorner.Parent = keybindElement
 
-local BackgroundImage = Instance.new("ImageLabel")
-
-    BackgroundImage.Name = "BackgroundImage"
-    BackgroundImage.Parent = Main  -- Attach it to Main so it moves with the UI
-    BackgroundImage.BackgroundTransparency = 1.000
-    BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-    BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-    BackgroundImage.ZIndex = 1  -- Same layer as UI elements
-    BackgroundImage.Image = "rbxassetid://89080175935937"
-    BackgroundImage.ScaleType = Enum.ScaleType.Crop
-    BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency to blend with UI
-
-    -- Apply transparency to UI elements to make the background visible
-    for _, v in pairs(Main:GetDescendants()) do
-        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
-            v.BackgroundTransparency = 0.3  -- Adjust transparency level as needed
-        end
-    end
 
                 touch.Name = "touch"
                 touch.Parent = keybindElement
@@ -2695,3 +2677,21 @@ local BackgroundImage = Instance.new("ImageLabel")
     return Tabs
 end
 return Kavo
+local BackgroundImage = Instance.new("ImageLabel")
+
+    BackgroundImage.Name = "BackgroundImage"
+    BackgroundImage.Parent = Main  -- Attach it to Main so it moves with the UI
+    BackgroundImage.BackgroundTransparency = 1.000
+    BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+    BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
+    BackgroundImage.ZIndex = 1  -- Same layer as UI elements
+    BackgroundImage.Image = "rbxassetid://89080175935937"
+    BackgroundImage.ScaleType = Enum.ScaleType.Crop
+    BackgroundImage.ImageTransparency = 0.2  -- Adjust transparency to blend with UI
+
+    -- Apply transparency to UI elements to make the background visible
+    for _, v in pairs(Main:GetDescendants()) do
+        if v:IsA("Frame") or v:IsA("TextLabel") or v:IsA("TextButton") then
+            v.BackgroundTransparency = 0.3  -- Adjust transparency level as needed
+        end
+    end
