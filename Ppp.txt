@@ -2676,7 +2676,6 @@ local Corner3 = Instance.new("UICorner")
     end  
     return Tabs
 end
-return Kavo
 local BackgroundImage = Instance.new("ImageLabel")
 
     BackgroundImage.Name = "BackgroundImage"
@@ -2695,3 +2694,4 @@ local BackgroundImage = Instance.new("ImageLabel")
             v.BackgroundTransparency = 0.3  -- Adjust transparency level as needed
         end
     end
+return Kavo
