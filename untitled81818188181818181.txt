@@ -1131,6 +1131,89 @@ end)()
                 end)()
             end 
 
+function Elements:NewSearchBar(placeholder, callback)
+    local SearchFunctions = {}
+    placeholder = placeholder or "Search..."
+    callback = callback or function() end
+    
+    local searchElement = Instance.new("Frame")
+    local searchBox = Instance.new("TextBox")
+    local searchCorner = Instance.new("UICorner")
+    local clearBtn = Instance.new("ImageButton")
+    local UICorner = Instance.new("UICorner")
+
+    searchElement.Name = "searchElement"
+    searchElement.Parent = sectionInners
+    searchElement.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    searchElement.BackgroundTransparency = 1.000
+    searchElement.Size = UDim2.new(0, 352, 0, 33)
+
+    searchBox.Name = "searchBox"
+    searchBox.Parent = searchElement
+    searchBox.BackgroundColor3 = themeList.ElementColor
+    searchBox.ClipsDescendants = true
+    searchBox.Size = UDim2.new(0, 352, 0, 33)
+    searchBox.Font = Enum.Font.FredokaOne
+    searchBox.PlaceholderText = placeholder
+    searchBox.Text = ""
+    searchBox.TextColor3 = themeList.TextColor
+    searchBox.TextSize = 14.000
+    searchBox.TextXAlignment = Enum.TextXAlignment.Left
+    searchBox.ClearTextOnFocus = false
+    searchBox.Padding.Left = UDim.new(0, 10)
+
+    searchCorner.CornerRadius = UDim.new(0, 4)
+    searchCorner.Parent = searchBox
+
+    clearBtn.Name = "clearBtn"
+    clearBtn.Parent = searchBox
+    clearBtn.BackgroundTransparency = 1.000
+    clearBtn.Position = UDim2.new(0.92, 0, 0.15, 0)
+    clearBtn.Size = UDim2.new(0, 23, 0, 23)
+    clearBtn.Image = "rbxassetid://3926305904"
+    clearBtn.ImageColor3 = themeList.SchemeColor
+    clearBtn.ImageRectOffset = Vector2.new(924, 724)
+    clearBtn.ImageRectSize = Vector2.new(36, 36)
+    clearBtn.Visible = false
+
+    UICorner.CornerRadius = UDim.new(0, 4)
+    UICorner.Parent = searchBox
+
+    -- Search functionality
+    searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+        callback(searchBox.Text)
+        clearBtn.Visible = searchBox.Text ~= ""
+    end)
+
+    clearBtn.MouseButton1Click:Connect(function()
+        searchBox.Text = ""
+        clearBtn.Visible = false
+        callback("")
+    end)
+
+    -- Theme updates
+    coroutine.wrap(function()
+        while wait() do
+            searchBox.BackgroundColor3 = themeList.ElementColor
+            searchBox.TextColor3 = themeList.TextColor
+            clearBtn.ImageColor3 = themeList.SchemeColor
+        end
+    end)()
+
+    updateSectionFrame()
+    UpdateSize()
+
+    function SearchFunctions:SetText(text)
+        searchBox.Text = text
+    end
+
+    function SearchFunctions:GetText()
+        return searchBox.Text
+    end
+
+    return SearchFunctions
+end
+
                 function Elements:NewToggle(tname, nTip, callback)
                     local TogFunction = {}
                     tname = tname or "Toggle"
