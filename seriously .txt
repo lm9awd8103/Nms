@@ -1104,7 +1104,6 @@ function Elements:NewToggle(tname, nTip, callback)
     local toggleEnabled = Instance.new("ImageLabel")
     local togName = Instance.new("TextLabel")
     local viewInfo = Instance.new("ImageButton")
-    local Sample = Instance.new("ImageLabel")
 
     toggleElement.Name = "toggleElement"
     toggleElement.Parent = sectionInners
@@ -1133,8 +1132,8 @@ function Elements:NewToggle(tname, nTip, callback)
     toggleEnabled.Name = "toggleEnabled"
     toggleEnabled.Parent = toggleElement
     toggleEnabled.BackgroundTransparency = 1.000
-    toggleEnabled.Position = UDim2.new(0.02, 0, 0.18, 0)
-    toggleEnabled.Size = UDim2.new(0, 21, 0, 21)
+    toggleEnabled.Position = toggleDisabled.Position
+    toggleEnabled.Size = toggleDisabled.Size
     toggleEnabled.Image = "rbxassetid://3926309567"
     toggleEnabled.ImageColor3 = themeList.SchemeColor
     toggleEnabled.ImageRectOffset = Vector2.new(784, 420)
@@ -1162,12 +1161,17 @@ function Elements:NewToggle(tname, nTip, callback)
     viewInfo.ImageRectOffset = Vector2.new(764, 764)
     viewInfo.ImageRectSize = Vector2.new(36, 36)
 
-    Sample.Name = "Sample"
-    Sample.Parent = toggleElement
-    Sample.BackgroundTransparency = 1.000
-    Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
-    Sample.ImageColor3 = themeList.SchemeColor
-    Sample.ImageTransparency = 0.600
+    -- Resize function
+    local function UpdateSize()
+        local innerSize = sectionElListing.AbsoluteContentSize
+        sectionInners.Size = UDim2.new(1, 0, 0, innerSize.Y)
+        local totalSize = sectionlistoknvm.AbsoluteContentSize
+        sectionFrame.Size = UDim2.new(0, 352, 0, totalSize.Y)
+        page.CanvasSize = UDim2.new(0, 0, 0, totalSize.Y + 20)
+    end
+    UpdateSize()
+    sectionInners.ChildAdded:Connect(UpdateSize)
+    sectionInners.ChildRemoved:Connect(UpdateSize)
 
     local function updateToggle()
         toggleEnabled.ImageTransparency = toggled and 0 or 1
@@ -1191,6 +1195,7 @@ function Elements:NewToggle(tname, nTip, callback)
 
     return TogFunction
 end
+
 
 
             function Elements:NewSlider(slidInf, slidTip, maxvalue, minvalue, callback)
