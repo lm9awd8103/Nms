@@ -1,0 +1,506 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
+
+-- Create Main GUI
+local mainGui = Instance.new("ScreenGui")
+mainGui.Name = "MainMenuGui"
+mainGui.Parent = game:GetService("CoreGui")  -- Parent to CoreGui to display above everything
+mainGui.IgnoreGuiInset = true  -- Ensures it displays over everything
+
+-- Create Full-Screen Background with Gradient
+local background = Instance.new("Frame")
+background.Size = UDim2.new(2, 0, 2, 0)
+background.AnchorPoint = Vector2.new(0.5, 0.5)
+background.Position = UDim2.new(0.5, 0, 0.5, 0)
+background.BackgroundColor3 = Color3.fromRGB(10, 10, 10) -- Darker background
+background.BackgroundTransparency = 0.1
+background.Parent = mainGui
+background.ZIndex = 10  -- Set to a higher value to be on top
+
+-- Adding a Gradient Background (Darker)
+local gradient = Instance.new("UIGradient")
+gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(5, 5, 5)),  
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
+})
+gradient.Parent = background
+
+-- Create Welcome Button
+local welcomeButton = Instance.new("TextButton")
+welcomeButton.Size = UDim2.new(0.6, 0, 0.2, 0)
+welcomeButton.Position = UDim2.new(0.2, 0, 0.3, 0)  -- Moved further down
+welcomeButton.BackgroundTransparency = 0
+welcomeButton.BackgroundColor3 = Color3.fromRGB(128, 0, 255)
+welcomeButton.Text = "Hi " .. player.DisplayName .. " good to see you! Welcome to Twilight hub!"
+welcomeButton.TextScaled = true
+welcomeButton.TextWrapped = true
+welcomeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+welcomeButton.TextTransparency = 1
+welcomeButton.TextStrokeTransparency = 0.5
+welcomeButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+welcomeButton.Font = Enum.Font.SourceSansBold
+welcomeButton.Parent = mainGui
+welcomeButton.ZIndex = 101  -- Ensure it stays on top
+
+local welcomeButtonCorner = Instance.new("UICorner")
+welcomeButtonCorner.CornerRadius = UDim.new(0.1, 0)
+welcomeButtonCorner.Parent = welcomeButton
+
+-- Create Play Button
+local playButton = Instance.new("TextButton")
+playButton.Size = UDim2.new(0.25, 0, 0.1, 0)
+playButton.Position = UDim2.new(0.375, 0, 0.8, 0)
+playButton.BackgroundColor3 = Color3.fromRGB(56, 121, 255)  -- Blue color
+playButton.Text = "Let's Go!"
+playButton.TextScaled = true
+playButton.Font = Enum.Font.SourceSansBold
+playButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+playButton.TextStrokeTransparency = 0.5
+playButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+playButton.Parent = mainGui
+playButton.ZIndex = 200  -- Ensure it stays on top
+
+local playButtonCorner = Instance.new("UICorner")
+playButtonCorner.CornerRadius = UDim.new(0.2, 0)
+playButtonCorner.Parent = playButton
+
+-- Create Note Button (Left)
+local noteButton = Instance.new("TextButton")
+noteButton.Size = UDim2.new(0.25, 0, 0.1, 0)
+noteButton.Position = UDim2.new(0.1, 0, 0.8, 0)
+noteButton.BackgroundColor3 = Color3.fromRGB(128, 0, 255)  -- Red color
+noteButton.Text = "Note: Don't Spam"
+noteButton.TextScaled = true
+noteButton.Font = Enum.Font.SourceSansBold
+noteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+noteButton.TextStrokeTransparency = 0
+noteButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+noteButton.Parent = mainGui
+noteButton.ZIndex = 101 -- Ensure it stays on top
+
+local noteButtonCorner = Instance.new("UICorner")
+noteButtonCorner.CornerRadius = UDim.new(0.2, 0)
+noteButtonCorner.Parent = noteButton
+
+-- Create Credit Button (Right)
+local creditButton = Instance.new("TextButton")
+creditButton.Size = UDim2.new(0.25, 0, 0.1, 0)
+creditButton.Position = UDim2.new(0.65, 0, 0.8, 0)
+creditButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Green color
+creditButton.Text = "Made by Swight"
+creditButton.TextScaled = true
+creditButton.Font = Enum.Font.SourceSansBold
+creditButton.TextColor3 = Color3.fromRGB(255, 255, 255) -- will be overwritten by rainbow
+creditButton.Parent = mainGui
+creditButton.ZIndex = 101 -- Ensure it stays on top
+
+local creditButtonCorner = Instance.new("UICorner")
+creditButtonCorner.CornerRadius = UDim.new(0.2, 0)
+creditButtonCorner.Parent = creditButton
+
+-- Rainbow Text Animation
+local RunService = game:GetService("RunService")
+local hue = 0
+
+RunService.RenderStepped:Connect(function()
+	hue = (hue + 0.005) % 1
+	local rainbowColor = Color3.fromHSV(hue, 1, 1)
+	creditButton.TextColor3 = rainbowColor
+end)
+
+-- Create Version Button (Top Right Corner)
+local versionButton = Instance.new("TextButton")
+versionButton.Size = UDim2.new(0.15, 0, 0.05, 0)
+versionButton.Position = UDim2.new(0.8, 0, 0.05, 0)  -- Top right corner
+versionButton.BackgroundColor3 = Color3.fromRGB(100, 100, 255)  -- Light blue color
+versionButton.Text = "Version 1.2"
+versionButton.TextScaled = true
+versionButton.Font = Enum.Font.SourceSansBold
+versionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+versionButton.TextStrokeTransparency = 0.5
+versionButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+versionButton.Parent = mainGui
+versionButton.ZIndex = 101 -- Ensure it stays on top
+
+local versionButtonCorner = Instance.new("UICorner")
+versionButtonCorner.CornerRadius = UDim.new(0.2, 0)
+versionButtonCorner.Parent = versionButton
+
+-- Create Script Info Button (Hidden Initially)
+local scriptInfoButton = Instance.new("TextButton")
+scriptInfoButton.Size = UDim2.new(0.6, 0, 0.5, 0)
+scriptInfoButton.Position = UDim2.new(0.2, 0, 0.25, 0)  -- Adjusted to the left side
+scriptInfoButton.BackgroundTransparency = 1
+scriptInfoButton.BackgroundColor3 = Color3.fromRGB(128, 0, 215)
+scriptInfoButton.Text = "This script has So Many OP Features It's All Working Perfectly And It's All Tested By Owner!\n And This Is The Best Script For Timebomb Duels So Far We're #1\n And If U Have Any Upd Idea Or Questions Or Suggestions Dc:v2lentino"
+scriptInfoButton.TextScaled = true
+scriptInfoButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+scriptInfoButton.TextTransparency = 1
+scriptInfoButton.TextStrokeTransparency = 0.5
+scriptInfoButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+scriptInfoButton.Font = Enum.Font.SourceSansBold
+scriptInfoButton.Parent = mainGui
+scriptInfoButton.ZIndex = 101  -- Ensure it stays on top
+
+local scriptInfoButtonCorner = Instance.new("UICorner")
+scriptInfoButtonCorner.CornerRadius = UDim.new(0.1, 0)
+scriptInfoButtonCorner.Parent = scriptInfoButton
+
+-- Create New Large Button on the Right (Hidden Initially)
+local largeButton = Instance.new("TextButton")
+largeButton.Size = UDim2.new(0.3, 0, 0.7, 0)  -- Smaller width (0.35), taller height (0.7)
+largeButton.Position = UDim2.new(0.7, 0, 0.25, 0)  -- Positioned on the right
+largeButton.BackgroundColor3 = Color3.fromRGB(128, 0, 215)  -- Dark gray color
+largeButton.Text = "Update Logs:\n\n [+] Added new features\n [-] Fixed bugs\n [+] Improved performance\n [+] Added New Loading Screen\n [!]Optimized UI\n [+] Added New Notification System!\n[+] New Update!\n- update"  -- Multi-line text
+largeButton.TextScaled = true
+largeButton.TextWrapped = true
+largeButton.Font = Enum.Font.SourceSansBold
+largeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+largeButton.TextStrokeTransparency = 0.5
+largeButton.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+largeButton.Visible = false  -- Hidden initially
+largeButton.Parent = mainGui
+largeButton.ZIndex = 101 -- Ensure it stays on top
+
+local largeButtonCorner = Instance.new("UICorner")
+largeButtonCorner.CornerRadius = UDim.new(0.1, 0)
+largeButtonCorner.Parent = largeButton
+
+-- Create Blur Effect
+local blur = Instance.new("BlurEffect")
+blur.Size = 24
+blur.Parent = game.Lighting
+
+-- Create a Blocking Frame to prevent interaction with background
+local blockingFrame = Instance.new("Frame")
+blockingFrame.Size = UDim2.new(1, 0, 1, 0)  -- Cover the entire screen
+blockingFrame.Position = UDim2.new(0, 0, 0, 0)
+blockingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Optional, can be transparent
+blockingFrame.BackgroundTransparency = 1  -- Make it invisible
+blockingFrame.Parent = mainGui
+blockingFrame.ZIndex = 102 -- Higher ZIndex to block interactions with everything
+blockingFrame.Name = "BlockingFrame"
+
+-- Set the blocking frame to intercept input
+blockingFrame.Active = true  -- This ensures it can capture all clicks and prevent interactions
+blockingFrame.Selectable = true  -- Make the frame selectable to block clicks
+
+-- Create Sound for Button Clicks
+local clickSound = Instance.new("Sound")
+clickSound.SoundId = "rbxassetid://3320590485"  -- Replace with your sound ID
+clickSound.Volume = 10
+clickSound.Parent = SoundService
+
+-- Function to animate UI elements
+local function animateText(button, startPos, endPos)
+    button.Position = startPos
+    button.TextTransparency = 1
+    button.BackgroundTransparency = 1
+    TweenService:Create(button, TweenInfo.new(1), {TextTransparency = 0, BackgroundTransparency = 0.01}):Play()
+    TweenService:Create(button, TweenInfo.new(1), {Position = endPos}):Play()
+end
+
+-- Animate welcome button immediately with Play and Note buttons
+animateText(welcomeButton, UDim2.new(0.2, 0, 0.4, 0), UDim2.new(0.2, 0, 0.3, 0))  -- Adjusted start position
+animateText(playButton, UDim2.new(0.375, 0, 1, 0), UDim2.new(0.375, 0, 0.8, 0))
+animateText(noteButton, UDim2.new(0.1, 0, 1, 0), UDim2.new(0.1, 0, 0.8, 0))
+animateText(creditButton, UDim2.new(0.65, 0, 1, 0), UDim2.new(0.65, 0, 0.8, 0))
+animateText(versionButton, UDim2.new(0.8, 0, -0.1, 0), UDim2.new(0.8, 0, 0.05, 0))  -- Animate version button from top
+
+
+-- Debounce to prevent spam
+local clickCount = 0
+local isProcessing = false
+
+
+-- Modify the changeUIOnClick function to show/hide both buttons together
+local function changeUIOnClick()
+    if isProcessing then return end
+    isProcessing = true
+
+    -- Play click sound
+    clickSound:Play()
+
+    if clickCount == 0 then
+        -- Animate out welcome, note, and credit buttons
+        for _, button in pairs({welcomeButton, noteButton, creditButton}) do
+            TweenService:Create(button, TweenInfo.new(0.5), {TextTransparency = 1, BackgroundTransparency = 1}):Play()
+        end
+        task.wait(0.5)
+
+        -- Change play button to "Continue" and animate it
+        playButton.Text = "Continue"
+
+        -- Show the script info button and large button
+        scriptInfoButton.Visible = true
+        largeButton.Visible = true
+
+        -- Animate in script info button and large button together
+        animateText(scriptInfoButton, UDim2.new(0.05, 0, 0.3, 0), UDim2.new(0.05, 0, 0.25, 0))  -- Adjusted position
+        animateText(largeButton, UDim2.new(0.6, 0, 0.2, 0), UDim2.new(0.7, 0, 0.2, 0))  -- Adjusted position
+
+        clickCount = clickCount + 1
+    elseif clickCount == 1 then
+        -- Animate out play button, script info button, and large button together
+        TweenService:Create(playButton, TweenInfo.new(1), {Position = UDim2.new(0.375, 0, 1.2, 0)}):Play()
+        TweenService:Create(scriptInfoButton, TweenInfo.new(1), {TextTransparency = 1, BackgroundTransparency = 1}):Play()
+        TweenService:Create(largeButton, TweenInfo.new(1), {TextTransparency = 1, BackgroundTransparency = 1}):Play()
+        TweenService:Create(background, TweenInfo.new(1), {BackgroundTransparency = 1}):Play()
+        task.wait(1)
+
+        -- Load the loading screen
+        local loadingScreenGui = Instance.new("ScreenGui")
+        loadingScreenGui.Name = "LoadingScreenGui"
+        loadingScreenGui.Parent = game:GetService("CoreGui")
+        loadingScreenGui.IgnoreGuiInset = true
+
+        -- Create Full-Screen Black Background
+        local loadingBackground = Instance.new("Frame")
+        loadingBackground.Size = UDim2.new(1, 0, 1, 0)
+        loadingBackground.Position = UDim2.new(0, 0, 0, 0)
+        loadingBackground.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        loadingBackground.BackgroundTransparency = 1  -- Start fully transparent
+        loadingBackground.Parent = loadingScreenGui
+
+        -- Add a subtle pulsing effect to the background
+        local pulseTween = TweenService:Create(loadingBackground, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {BackgroundTransparency = 0.2})
+        pulseTween:Play()
+
+        -- Create Loading Text
+        local loadingText = Instance.new("TextLabel")
+        loadingText.Size = UDim2.new(0.8, 0, 0.12, 0)
+        loadingText.Position = UDim2.new(0.1, 0, 0.3, 0)  -- Position above the progress bar
+        loadingText.BackgroundTransparency = 1
+        loadingText.Text = "Loading..."
+        loadingText.TextScaled = true
+        loadingText.Font = Enum.Font.SourceSansBold  -- Consistent font
+        loadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+        loadingText.TextTransparency = 1  -- Start fully transparent
+        loadingText.Parent = loadingScreenGui
+        
+        -- Add a subtle animation to the loading text
+local textTween = TweenService:Create(loadingText, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {TextTransparency = 0.2})
+textTween:Play()
+
+-- Typing Animation for Loading Text
+local function animateTyping()
+    local baseText = "Loading"
+    while true do
+        for i = 1, 3 do
+            loadingText.Text = baseText .. string.rep(".", i)
+            task.wait(0.2)  -- Wait 0.5 seconds between each dot
+        end
+        task.wait(0.1)  -- Wait before removing dots
+        for i = 3, 1, -1 do
+            loadingText.Text = baseText .. string.rep(".", i)
+            task.wait(0.2)  -- Wait 0.5 seconds between each dot removal
+        end
+    end
+end
+
+-- Start the typing animation
+task.spawn(animateTyping)
+
+        -- Add a subtle animation to the loading text
+        local textTween = TweenService:Create(loadingText, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {TextTransparency = 0.2})
+        textTween:Play()
+
+        -- Create Progress Bar Frame
+        local loadingBarFrame = Instance.new("Frame")
+        loadingBarFrame.Size = UDim2.new(0.7, 0, 0.05, 0)  -- Wider and thicker progress bar
+        loadingBarFrame.Position = UDim2.new(0.15, 0, 0.5, 0)  -- Centered
+        loadingBarFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)  -- Dark gray background
+        loadingBarFrame.BackgroundTransparency = 1  -- Start fully transparent
+        loadingBarFrame.Parent = loadingScreenGui
+
+        local loadingBarCorner = Instance.new("UICorner")
+        loadingBarCorner.CornerRadius = UDim.new(0.5, 0)  -- Fully rounded corners
+        loadingBarCorner.Parent = loadingBarFrame
+
+        -- Create Progress Bar Filler (Gradient)
+        local progressBar = Instance.new("Frame")
+        progressBar.Size = UDim2.new(0, 0, 1, 0)  -- Start empty
+        progressBar.Position = UDim2.new(0, 0, 0, 0)
+        progressBar.BackgroundColor3 = Color3.fromRGB(128, 0, 255)  -- Bright blue
+        progressBar.BackgroundTransparency = 1  -- Start fully transparent
+        progressBar.Parent = loadingBarFrame
+
+        local progressBarCorner = Instance.new("UICorner")
+        progressBarCorner.CornerRadius = UDim.new(0.5, 0)  -- Fully rounded corners
+        progressBarCorner.Parent = progressBar
+
+        -- Add a gradient to the progress bar
+        local progressGradient = Instance.new("UIGradient")
+        progressGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 120, 255)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 200, 255))
+        })
+        progressGradient.Rotation = 90
+        progressGradient.Parent = progressBar
+
+        -- Create Percentage Text
+        local percentageText = Instance.new("TextLabel")
+        percentageText.Size = UDim2.new(0.2, 0, 0.1, 0)  -- Bigger text
+        percentageText.Position = UDim2.new(0.4, 0, 0.55, 0)  -- Below the progress bar
+        percentageText.BackgroundTransparency = 1
+        percentageText.Text = "Loading assets..."
+        percentageText.TextScaled = true
+        percentageText.Font = Enum.Font.SourceSansBold  -- Consistent font
+        percentageText.TextColor3 = Color3.fromRGB(255, 255, 255)
+        percentageText.TextTransparency = 1  -- Start fully transparent
+        percentageText.Parent = loadingScreenGui
+
+        -- Animate the percentage text
+        local percentageTween = TweenService:Create(percentageText, TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {TextTransparency = 0.2})
+        percentageTween:Play()
+
+        -- Create "Wait - X" Timer Text (Bigger)
+        local waitText = Instance.new("TextButton")
+        waitText.Size = UDim2.new(0.10, 0, 0.08, 0)  -- Bigger size
+        waitText.Position = UDim2.new(0.1, 0, 0.8, 0)  -- Left side
+        waitText.BackgroundTransparency = 1
+        waitText.Text = "Wait -10"  -- Start with 10 seconds
+        waitText.TextScaled = true
+        waitText.Font = Enum.Font.SourceSansBold  -- Consistent font
+        waitText.TextColor3 = Color3.fromRGB(255, 255, 255)
+        waitText.TextTransparency = 1  -- Start fully transparent
+        waitText.Parent = loadingScreenGui
+
+        -- Create Skip Button
+        local skipButton = Instance.new("TextButton")
+        skipButton.Size = UDim2.new(0.25, 0, 0.08, 0)  -- Same size as waitText
+        skipButton.Position = UDim2.new(0.71, 0, 0.8, 0)  -- Right side
+        skipButton.BackgroundColor3 = Color3.fromRGB(128, 0, 255)  -- Red color
+        skipButton.BackgroundTransparency = 1  -- Start fully transparent
+        skipButton.Text = "Skip (5s)"
+        skipButton.TextScaled = true
+        skipButton.Font = Enum.Font.SourceSansBold  -- Consistent font
+        skipButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        skipButton.TextTransparency = 1  -- Start fully transparent
+        skipButton.Parent = loadingScreenGui
+
+        local skipButtonCorner = Instance.new("UICorner")
+        skipButtonCorner.CornerRadius = UDim.new(0.2, 0)  -- Rounded corners
+        skipButtonCorner.Parent = skipButton
+
+        -- Add hover effect to skip button
+        skipButton.MouseEnter:Connect(function()
+            TweenService:Create(skipButton, TweenInfo.new(0.2), {Size = UDim2.new(0.27, 0, 0.09, 0)}):Play()
+        end)
+        skipButton.MouseLeave:Connect(function()
+            TweenService:Create(skipButton, TweenInfo.new(0.2), {Size = UDim2.new(0.25, 0, 0.08, 0)}):Play()
+        end)
+
+        -- Fade-in animation for loading screen elements
+        TweenService:Create(loadingBackground, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+        TweenService:Create(loadingText, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
+        TweenService:Create(loadingBarFrame, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+        TweenService:Create(progressBar, TweenInfo.new(0.5), {BackgroundTransparency = 0}):Play()
+        TweenService:Create(percentageText, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
+        TweenService:Create(waitText, TweenInfo.new(0.5), {TextTransparency = 0}):Play()
+        TweenService:Create(skipButton, TweenInfo.new(0.5), {BackgroundTransparency = 0, TextTransparency = 0}):Play()
+
+        -- Cooldown for Skip Button (5 seconds)
+        local skipCooldown = 5
+        local skipReady = false
+        task.spawn(function()
+            while skipCooldown > 0 do
+                task.wait(1)
+                skipCooldown = skipCooldown - 1
+                skipButton.Text = "Skip (" .. skipCooldown .. "s)"
+            end
+            skipButton.Text = "Skip"
+            skipReady = true
+        end)
+
+        -- Function to skip the loading screen
+        local function skipLoading()
+            if not skipReady then return end
+
+            -- Fade out all elements
+            TweenService:Create(loadingBackground, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(loadingBarFrame, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(progressBar, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+            TweenService:Create(loadingText, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
+            TweenService:Create(percentageText, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
+            TweenService:Create(waitText, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
+            TweenService:Create(skipButton, TweenInfo.new(0.5), {BackgroundTransparency = 1, TextTransparency = 1}):Play()
+            TweenService:Create(blockingFrame, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+
+            -- Wait for the fade-out animation to finish
+            task.wait(0.5)
+
+            -- Remove the blur effect
+            blur:Destroy()
+            
+            loadingScreenGui:Destroy()
+            blockingFrame:Destroy()  -- Remove the blocking frame
+            mainGui:Destroy()
+        end
+
+        -- Connect Skip Button Click
+        skipButton.MouseButton1Click:Connect(skipLoading)
+
+        -- Dynamic Loading Text
+        local loadingMessages = {
+            "Loading assets...",
+            "Loading textures...",
+            "Compiling scripts...",
+            "Loading models...",
+            "Loading sounds...",
+            "Optimizing UI...",
+            "Loading environments...",
+            "Finalizing data...",
+            "Loading shaders...",
+            "Preparing game..."
+        }
+
+        local function updateLoadingText()
+            local index = 1
+            while true do
+                percentageText.Text = loadingMessages[index]
+                index = (index % #loadingMessages) + 1
+                task.wait(0.2)  -- Change text every 0.2 seconds
+            end
+        end
+
+        -- Start the Loading Animation
+        task.spawn(updateLoadingText)
+
+        -- Animate Progress Bar (Filling Up Over 10 Seconds)
+        local function animateProgress()
+            for i = 1, 10 do
+                local targetSize = UDim2.new(i / 10, 0, 1, 0)
+                TweenService:Create(progressBar, TweenInfo.new(1, Enum.EasingStyle.Linear), {Size = targetSize}):Play()
+                waitText.Text = "Wait -" .. (10 - i)  -- Update wait text countdown
+                task.wait(1)  -- Wait 1 second for each step
+            end
+
+            -- When progress finishes, fade out the loading screen
+            skipLoading()
+        end
+
+        -- Start the Loading Animation
+        animateProgress()
+
+        -- Clean up original GUI elements after showing loading screen
+        mainGui:Destroy()
+        blur:Destroy()
+        blockingFrame:Destroy()  -- Remove the blocking frame after the UI change
+    end
+    
+    isProcessing = false
+end
+
+-- Add Hover Effect to Play Button
+playButton.MouseEnter:Connect(function()
+    TweenService:Create(playButton, TweenInfo.new(0.2), {Size = UDim2.new(0.27, 0, 0.11, 0)}):Play()
+end)
+playButton.MouseLeave:Connect(function()
+    TweenService:Create(playButton, TweenInfo.new(0.2), {Size = UDim2.new(0.25, 0, 0.1, 0)}):Play()
+end)
+
+-- Connect Play Button Click
+playButton.MouseButton1Click:Connect(changeUIOnClick)
